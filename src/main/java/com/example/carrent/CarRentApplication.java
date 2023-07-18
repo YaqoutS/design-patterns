@@ -1,8 +1,6 @@
 package com.example.carrent;
 
-import com.example.carrent.model.Car;
-import com.example.carrent.model.FirstProvider;
-import com.example.carrent.model.SecondProvider;
+import com.example.carrent.model.*;
 import com.example.carrent.service.ProviderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,13 +27,23 @@ public class CarRentApplication {
     }
 
     @Bean
-    FirstProvider firstProvider(ProviderService providerService) {
-        return new FirstProvider(providerService);
+    FirstProvider firstProvider(FirstProviderFactory firstProviderFactory) {
+        return firstProviderFactory.createProvider();
     }
 
     @Bean
-    SecondProvider secondProvider(ProviderService providerService) {
-        return new SecondProvider(providerService);
+    SecondProvider secondProvider(SecondProviderFactory secondProviderFactory) {
+        return secondProviderFactory.createProvider();
+    }
+
+    @Bean
+    FirstProviderFactory firstProviderFactory(ProviderService providerService) {
+        return new FirstProviderFactory(providerService);
+    }
+
+    @Bean
+    SecondProviderFactory secondProviderFactory(ProviderService providerService) {
+        return new SecondProviderFactory(providerService);
     }
 
     @Bean
